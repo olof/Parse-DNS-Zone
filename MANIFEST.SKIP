@@ -1,0 +1,11 @@
+# vcs
+^\.git\b
+
+# eu::mm generated files
+^Makefile$
+^blib$
+\.old$
+\.bak$
+
+# vim swap files
+^\..*\.sw\w$

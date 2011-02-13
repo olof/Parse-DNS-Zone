@@ -1,0 +1,16 @@
+Changes.pod
+doc/Contributors.pod
+doc/example.pl
+lib/Parse/DNS/Zone.pm
+LICENSE
+Makefile.PL
+MANIFEST
+MANIFEST.SKIP
+META.yml
+README
+t/01-dist.t
+t/02-coverage.t
+t/02-pod.t
+t/03-parser.t
+t/data/db.include
+t/data/db.simple
