@@ -223,7 +223,7 @@ sub get_rrs {
 
 Returns how many RRs of a given type is defined for $name. For a simple
 setup with a single RR for $name, this will return 1. If you have some
-kind of load balancing or other scheme using mutiple RRs of the same 
+kind of load balancing or other scheme using multiple RRs of the same 
 type this sub will return the number of "dupes".
 
 =cut
