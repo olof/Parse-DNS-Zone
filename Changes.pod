@@ -1,3 +1,5 @@
+=encoding utf8
+
 =head1 Changes in Parse::DNS::Zone
 
 =head2 Next release
