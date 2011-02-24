@@ -520,6 +520,11 @@ sub _parse_soa {
 
 RFC 1034, RFC 1035, Bind Administrator's Guide
 
+=head1 AVAILABILITY
+
+Latest stable version is available on CPAN. Current development
+version is available on https://github.com/olof/Parse-DNS-Zone.
+
 =head1 COPYRIGHT
 
 Copyright (c) 2009-2011 - Olof Johansson <olof@cpan.org>. 

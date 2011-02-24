@@ -18,6 +18,11 @@ STATUS
   please report success or failures on other nameds, with 
   similar RFC1034 format. 
 
+AVAILABILITY
+
+  Latest stable version is available on CPAN. Current development
+  version is available on https://github.com/olof/Parse-DNS-Zone.
+
 VERSION NUMBERING
 
   The version numbers should be read as a floating point value,
