@@ -10,6 +10,9 @@
 
 =item * Changed the GPL text in LICENSE to GPL-1 (2011-02-13)
 
+Note that this isn't a change in what license the module is relased
+under. It is, and has always been, Artistic License or GPL-1 or later.
+
 =item * Documented availability (CPAN, Github) in POD and README (2011-02-24)
 
 =back
