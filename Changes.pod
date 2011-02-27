@@ -17,6 +17,14 @@ under. It is, and has always been, Artistic License or GPL-1 or later.
 
 =back
 
+=head3 Tests
+
+=over
+
+=item * Added tests for case insensitivity
+
+=back
+
 =head2 0.41 (2011-01-07)
 
 =over 
