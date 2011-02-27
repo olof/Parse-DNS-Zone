@@ -1,5 +1,5 @@
 #!/usr/bin/perl 
-use Test::More tests => 37;
+use Test::More tests => 40;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -89,6 +89,13 @@ is(
 	int($zone->get_names),
 	$zone_simple{size},
 	"expected number of names in zone"
+);
+
+ok($zone->exists('NS1.EXAMPLE.COM.'), "Case insensitivity 1");
+ok($zone->exists('NS1.ExamplE.COM.'), "Case insensitivity 2");
+is(
+	$zone->get_rdata(name=>'NS1.ExaMplE.coM.', rr=>'a'),
+	$zone->get_rdata(name=>'ns1.example.com.', rr=>'A'),
 );
 
 ok($zone->exists('test'), "test exists");
