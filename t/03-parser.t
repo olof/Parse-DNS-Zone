@@ -1,7 +1,7 @@
 #!/usr/bin/perl 
 use strict;
 use warnings;
-use Test::More tests => 41;
+use Test::More tests => 42;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -35,6 +35,11 @@ my %zone_simple = (
 );
 
 $zone_simple{size} = int(keys %{$zone_simple{names}});
+
+my %zone_nottl = (
+	file => 't/data/db.nottl',
+	origin => 'example.com.',
+);
 
 if(! -r $zone_simple{file}) {
 	BAIL_OUT("$zone_simple{file} does not exist");
@@ -223,5 +228,13 @@ $zone = Parse::DNS::Zone->new(
 is(
 	$zone->get_rdata(name=>'test-origapp', rr=>'CNAME', field=>'rdata'),
 	"test.$zone_simple{origin}", 'Append origin to RDATA if told to do so'
+);
+
+ok(
+	eval { Parse::DNS::Zone->new(
+		zonefile => $zone_nottl{file},
+		origin => $zone_nottl{origin},
+	)},
+	'Should be possible to load zones without $TTL',
 );
 
