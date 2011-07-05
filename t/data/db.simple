@@ -1,6 +1,6 @@
 $TTL	3600
 
-@		IN		SOA	ns1.example.com. hostmaster.example.com. (
+example.com.	IN		SOA	ns1.example.com. hostmaster.example.com. (
 						1234567890	; Serial
 						86400		; Refresh
 						3600		; Retry
