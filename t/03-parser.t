@@ -1,5 +1,5 @@
 #!/usr/bin/perl 
-use Test::More tests => 40;
+use Test::More tests => 41;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -103,6 +103,11 @@ ok($zone->exists('test.example.com.'), "test.example.com. exists");
 ok(! $zone->exists('.'), "root (.) does not exists in zone");
 ok(! $zone->exists('fail'), "non existent domain does not exist");
 ok(! $zone->exists('fail.example.com.'), "non existent domain does not exist");
+
+ok(
+	! $zone->get_rdata(name=>'example.com.', rr=>'TXT'), 
+	'commented out rr should not exists'
+);
 
 is(
 	int($zone->get_rrs('test')),
