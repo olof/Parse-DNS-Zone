@@ -1,0 +1,75 @@
+Changes in Parse::DNS::Zone
+
+Next release
+============
+
+Documentation
+-------------
+* Changed the GPL text in LICENSE to GPL-1
+
+  Note that this isn't a change in what license the module is 
+  released under. It is, and has always been, Artistic License 
+  or GPL-1 or later.
+
+* Documented availability (CPAN, Github) in POD and README
+* Converted Changes to plaintext from POD
+
+Bugs
+----
+RT #69283: Not possible to not have defined $TTL within the zone 
+           Thanks Sebastian Hagedorn for reporting it!
+
+Tests
+-----
+* Added tests for case insensitivity
+* Added test for commented out RRs
+* Added test for not having set $TTL (RT #69283)
+
+0.41 (2011-01-07)
+=================
+* Origin is now appended in RDATA (thanks to Sebastian 
+  Hagedorn at Universität zu Köln).
+* Some minor documentation fixes
+
+0.4 (2010-11-21)
+================
+* get_rdata returns a list of complete RRset in list context.
+B<Please be aware that this may break existing code.> Sorry :-(
+
+* Fixes to documentation (new mail address, <olof@cpan.org>)
+
+0.3 (2010-04-18)
+================
+* Added real tests (t/03-parser.t)
+* Possibility to get either class, ttl or rdata when calling
+  get_rdata(). (Thanks to Mark J. Reed)
+* Fixed a bug with get_dupes(), trying to int() on an arrayref 
+  instead of the array (Thanks to Mark J. Reed)
+* Fixed bugs in documentation
+* Fixed RFC compliance bug, not supporting the format 
+  "<name> <class> <ttl> <type> <rdata>"
+
+0.23 (2009-11-15) (Never released)
+==================================
+* Added a LICENSE file 
+* Added POD tests 
+
+0.22 (2009-11-14)
+=================
+* Fixed a bug where you can't use @ as an argument to get_rdata
+* Fixed bug where no parsing of arguments is done on get_rrs and 
+  exists
+
+0.21 (2009-11-14)
+=================
+* First published version
+* Fixed a bug in $origin parsing, not possible to have dots in it
+
+0.20 (2009-11-13)
+=================
+* Fixed support for multiple RRs with same type for same name
+* Testing with Test::Distribution
+
+0.1 (2009-09-13)
+================
+* Packaged the module
