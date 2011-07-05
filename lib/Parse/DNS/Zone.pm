@@ -477,7 +477,7 @@ sub _parse_zone {
 			next;
 		}
 
-		if(not defined $def_ttl) {
+		if(not defined $ttl) {
 			carp("no ttl is set");
 			next;
 		}
