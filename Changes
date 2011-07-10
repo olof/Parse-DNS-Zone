@@ -1,6 +1,6 @@
 Changes in Parse::DNS::Zone
 
-Next release
+0.42 (2011-07-10)
 ============
 
 Documentation
@@ -13,6 +13,7 @@ Documentation
 
 * Documented availability (CPAN, Github) in POD and README
 * Converted Changes to plaintext from POD
+* Converted Contributors to plaintext from POD
 
 Bugs
 ----
