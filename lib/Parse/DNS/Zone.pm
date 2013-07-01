@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 # Parse::DNS::Zone - DNS Zone File Parser
 #
-# Copyright (c) 2009-2011 - Olof Johansson <olof@cpan.org>. 
+# Copyright (c) 2009-2011, 2013 - Olof Johansson <olof@cpan.org>
 # All rights reserved.
 #
-# This program is free software; you can redistribute it and/or 
+# This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
 
 =pod
