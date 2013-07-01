@@ -483,7 +483,7 @@ sub _parse_zone {
 		}
 
 		$prev=$name;
-		$name.=".$origin" if $name ne $origin && $name !~ /\.$/;
+		$name = _fqdnize($name, $origin);
 
 		if($originappend and $type =~ /^(?:cname|afsdb|mx|ns)$/i and 
 		   $rdata ne $origin and $rdata !~ /\.$/) {
@@ -497,6 +497,17 @@ sub _parse_zone {
 
 	close $zonefh;
 	return %zone;
+}
+
+sub _fqdnize {
+	my ($name, $origin) = @_;
+
+	$origin //= '.';
+	$origin .= '.' unless $origin =~ /\.$/;
+
+	return $name if $name =~ /\.$/;
+	return "$name." if $origin eq '.';
+	return "$name.$origin";
 }
 
 # Is used to parse the SOA and build the soa hash as used 
