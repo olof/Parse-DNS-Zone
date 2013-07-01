@@ -34,12 +34,12 @@ Parse::DNS::Zone - DNS Zone File Parser
 =head1 DESCRIPTION
 
 B<Parse::DNS::Zone> parses a zonefile, used to define a DNS Zone
-and gives you the information therein, via an object oriented 
-interface. Parse::DNS::Zone doesn't validate rrdata, except for 
-SOA, and is used to 1) validate the basic structure of the file 
+and gives you the information therein, via an object oriented
+interface. Parse::DNS::Zone doesn't validate rrdata, except for
+SOA, and is used to 1) validate the basic structure of the file
 and 2) extract rdata so you can parse it and validate it yourself.
 
-Parse::DNS::Zone supports the zone file format as described in 
+Parse::DNS::Zone supports the zone file format as described in
 RFC 1034:
 
 =over 4
@@ -52,9 +52,9 @@ RFC 1034:
 
 =back
 
-Parse::DNS::Zone does not support $GENERATE in this version. 
+Parse::DNS::Zone does not support $GENERATE in this version.
 
-=cut 
+=cut
 
 package Parse::DNS::Zone;
 our $VERSION = '0.42';
@@ -70,7 +70,7 @@ use Carp;
 
 =item B<Required Arguments>
 
-=over 4 
+=over 4
 
 =item * B<origin>
 
@@ -88,18 +88,18 @@ Path to the zonefile being parsed
 
 =item * B<require_soa>
 
-If set to a true value, the parser will whine and die if 
+If set to a true value, the parser will whine and die if
 the zonefile doesn't contain a SOA record. (Default: yes)
 
 =item * B<append_origin>
 
 If set to a true value, the parser will append the origin
 to all unqualified domain names (in certain record types,
-currently: CNAME, MX, NS, AFSDB, PTR). If some record 
+currently: CNAME, MX, NS, AFSDB, PTR). If some record
 types are missing from this list, please report that as a
 bug. (Default: no)
 
-This feature do run the risk of becoming stale if new 
+This feature do run the risk of becoming stale if new
 record types are introduced. But if you run into problems,
 don't hesitate to report it!
 
@@ -123,7 +123,7 @@ sub new {
 
 	_parse($self);
 
-	if($self->{require_soa} && 
+	if($self->{require_soa} &&
 	   (!exists $self->{zone}{$self->{origin}}{soa})) {
 		croak("No SOA in zonefile");
 	}
@@ -139,12 +139,12 @@ sub new {
 
 =head3 $pdz->get_rdata(name=>$name, rr=>$rr, n=>$n, field=>$field)
 
-Is used to get the data associated with a specific name and rr 
-type. The $name can be as the name appears in the zonefile, or a 
-fqdn (with trailing .) as long as it is tracked by the zonefile. 
-If the n argument is specified, the n:th RR in the RRset is 
-returned. Otherwise, you'll get a complete list of the RRset if 
-you're in list context, or the first RR if you're in scalar 
+Is used to get the data associated with a specific name and rr
+type. The $name can be as the name appears in the zonefile, or a
+fqdn (with trailing .) as long as it is tracked by the zonefile.
+If the n argument is specified, the n:th RR in the RRset is
+returned. Otherwise, you'll get a complete list of the RRset if
+you're in list context, or the first RR if you're in scalar
 context.
 
 The $field is the particular component of the resource record to
@@ -166,7 +166,7 @@ sub get_rdata {
 	$name=~s/\.\@\./\.$self->{origin}/g;
 	$name=~s/\.\@$/\.$self->{origin}/g;
 	$name=~s/\@\.$/\.$self->{origin}/g;
-	$name .= ".$self->{origin}" if(($name ne $self->{origin}) && 
+	$name .= ".$self->{origin}" if(($name ne $self->{origin}) &&
 	                               (!($name=~/\.$/)));
 
 	return $self->{zone}{lc $name}{lc $rr}{lc $field}[$n] if defined $n;
@@ -188,7 +188,7 @@ sub exists {
 	$name=~s/\.\@\./\.$self->{origin}/g;
 	$name=~s/\.\@$/\.$self->{origin}/g;
 	$name=~s/\@\.$/\.$self->{origin}/g;
-	$name .= ".$self->{origin}" if(($name ne $self->{origin}) && 
+	$name .= ".$self->{origin}" if(($name ne $self->{origin}) &&
 	                               (!($name=~/\.$/)));
 
 	return exists $self->{zone}{lc $name};
@@ -209,7 +209,7 @@ sub get_rrs {
 	$name=~s/\.\@\./\.$self->{origin}/g;
 	$name=~s/\.\@$/\.$self->{origin}/g;
 	$name=~s/\@\.$/\.$self->{origin}/g;
-	$name .= ".$self->{origin}" if(($name ne $self->{origin}) && 
+	$name .= ".$self->{origin}" if(($name ne $self->{origin}) &&
 	                               (!($name=~/\.$/)));
 
 	foreach my $k (keys %{$self->{zone}{lc $name}}) {
@@ -223,7 +223,7 @@ sub get_rrs {
 
 Returns how many RRs of a given type is defined for $name. For a simple
 setup with a single RR for $name, this will return 1. If you have some
-kind of load balancing or other scheme using multiple RRs of the same 
+kind of load balancing or other scheme using multiple RRs of the same
 type this sub will return the number of "dupes".
 
 =cut
@@ -241,7 +241,7 @@ sub get_dupes {
 	$name=~s/\.\@\./\.$self->{origin}/g;
 	$name=~s/\.\@$/\.$self->{origin}/g;
 	$name=~s/\@\.$/\.$self->{origin}/g;
-	$name .= ".$self->{origin}" if(($name ne $self->{origin}) && 
+	$name .= ".$self->{origin}" if(($name ne $self->{origin}) &&
 	                               (!($name=~/\.$/)));
 
 	return int(@{$self->{zone}{lc $name}{lc $rr}{rdata}});
@@ -279,8 +279,8 @@ sub get_mname {
 
 =head3 $pdz->get_rname( parse=>{0,1} )
 
-Return the RNAME part of the SOA. If parse is set to a value 
-other than 0, the value will be interpreted to show an 
+Return the RNAME part of the SOA. If parse is set to a value
+other than 0, the value will be interpreted to show an
 emailaddress. (default: 0)
 
 =cut
@@ -358,7 +358,7 @@ sub get_minimum {
 
 1;
 
-# Is used to populate the zone hash used internally. 
+# Is used to populate the zone hash used internally.
 sub _parse {
 	my $self = shift;
 	my %zone = _parse_zone(
@@ -393,13 +393,13 @@ sub _parse_zone {
 		(\S+)\s+ # type
 		(.*) # rdata
 	$/ix;
-	
+
 	while(<$zonefh>) {
 		chomp;
 		s/;.*$//;
 		next if /^\s*$/;
 		s/\s+/ /g;
-		
+
 		s/^\@ /$origin /g;
 		s/ \@ / $origin /g;
 		s/ \@$/ $origin/g;
@@ -407,14 +407,14 @@ sub _parse_zone {
 		# handles mutlirow entries, with ()
 		if($mrow) {
 			$mrow.=$_;
-			
-			next if(! /\)/); 
 
-			# End of multirow 
+			next if(! /\)/);
+
+			# End of multirow
 			$mrow=~s/[\(\)]//g;
 			$mrow=~s/\n//mg;
 			$mrow=~s/\s+/ /g;
-			$mrow .= "\n";	
+			$mrow .= "\n";
 
 			$_ = $mrow;
 			undef $mrow;
@@ -440,7 +440,7 @@ sub _parse_zone {
 
 			my
 				%subz=_parse_zone(
-					$zfile, $subo, $originappend, 
+					$zfile, $subo, $originappend,
 					$def_class, $def_ttl
 				);
 
@@ -485,7 +485,7 @@ sub _parse_zone {
 		$prev=$name;
 		$name = _fqdnize($name, $origin);
 
-		if($originappend and $type =~ /^(?:cname|afsdb|mx|ns)$/i and 
+		if($originappend and $type =~ /^(?:cname|afsdb|mx|ns)$/i and
 		   $rdata ne $origin and $rdata !~ /\.$/) {
 			$rdata.=".$origin";
 		}
@@ -510,14 +510,14 @@ sub _fqdnize {
 	return "$name.$origin";
 }
 
-# Is used to parse the SOA and build the soa hash as used 
+# Is used to parse the SOA and build the soa hash as used
 # internally..
 sub _parse_soa {
 	my $self = shift;
 	my $soa_rd = get_rdata($self, (name=>"$self->{origin}", rr=>'SOA'));
 	my($mname,$rname,$serial,$refresh,$retry,$expire,$minimum)=
 		$soa_rd=~/^(\S+) (\S+) (\d+) (\d+) (\d+) (\d+) (\d+)\s*$/;
-	
+
 	$self->{soa}{mname}=$mname;
 	$self->{soa}{rname}=$rname;
 	$self->{soa}{serial}=$serial;
@@ -538,10 +538,10 @@ version is available on https://github.com/olof/Parse-DNS-Zone.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009-2011 - Olof Johansson <olof@cpan.org>. 
+Copyright (c) 2009-2011 - Olof Johansson <olof@cpan.org>.
 All rights reserved.
 
-This program is free software; you can redistribute it and/or 
+This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
 
 =cut
