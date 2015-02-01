@@ -60,6 +60,8 @@ package Parse::DNS::Zone;
 our $VERSION = '0.42';
 use warnings;
 use strict;
+use File::Basename;
+use File::Spec;
 use Carp;
 
 =head1 CONSTRUCTOR
@@ -76,9 +78,19 @@ use Carp;
 
 Origin
 
+=back
+
+And additionally, exactly one of the following:
+
+=over 4
+
 =item * B<zonefile>
 
 Path to the zonefile being parsed
+
+=item * B<zonestr>
+
+The zone, as a string.
 
 =back
 
@@ -90,6 +102,14 @@ Path to the zonefile being parsed
 
 If set to a true value, the parser will whine and die if
 the zonefile doesn't contain a SOA record. (Default: yes)
+
+=item * B<basepath>
+
+Specify a basepath, from which included relative zonefiles
+should be available. If used with the B<zonefile> parameter,
+this defaults to the directory in which the zonefile is in.
+For $INCLUDEs to work when passing the zone in as a string,
+this needs to be specified.
 
 =item * B<append_origin>
 
@@ -116,6 +136,19 @@ sub new {
 		append_origin=>0,
 		@_
 	};
+
+	if (not defined $self->{zonestr} and defined $self->{zonefile}) {
+		$self->{zonestr} = _load_zonefile($self->{zonefile});
+	}
+	if (not defined $self->{zonestr}) {
+		croak("You need to specify either zonestr or zonefile");
+	}
+
+	# default basepath is dirname($zonefile)
+	if (not exists $self->{basepath}) {
+		$self->{basepath} = dirname($self->{zonefile}) if
+			defined $self->{zonefile};
+	}
 
 	# append trailing .
 	$self->{origin} .= '.' if($self->{origin}=~/[^[^\.]$/);
@@ -359,22 +392,42 @@ sub get_minimum {
 # Is used to populate the zone hash used internally.
 sub _parse {
 	my $self = shift;
-	my %zone = _parse_zone(
-		$self->{zonefile}, $self->{origin}, $self->{append_origin}
+
+	my %zone = $self->_parse_zone(
+		zonestr => $self->{zonestr},
+		origin => $self->{origin},
 	);
 
 	undef $self->{zone};
 	$self->{zone}={%zone};
 }
 
+sub _load_zonefile {
+	my $file = shift;
+	open(my $zonefh, $file) or croak("Could not open $file: $!");
+	return do { local $/; <$zonefh> }; # slurp
+}
+
 # Is used internally to parse a zone from a filename. will do some
 # recursion for the $include, so a procedural implementation is needed
 sub _parse_zone {
+	my $self = shift;
 	# $def_class and $def_ttl are only given when called for included zones
-	my ($zonefile, $origin, $originappend, $def_class, $def_ttl) = @_;
+	my %opts = @_;
 
-	my($zonepath) = $zonefile =~ /^(.*\/)/;
-	open(my $zonefh, $zonefile) or croak("Could not open $zonefile: $!");
+	my $origin = $opts{origin} // $self->{origin};
+
+	my $zonestr = $opts{zonestr};
+	if (not defined $zonestr and exists $opts{zonefile}) {
+		$zonestr = _load_zonefile($opts{zonefile});
+	}
+
+	my ($def_class, $def_ttl);
+	if ($opts{included}) {
+		($def_class, $def_ttl) = @{\%opts}{qw(default_class default_ttl)};
+
+	}
+	my $zonepath = $self->{basepath};
 
 	my $mrow;
 	my $prev;
@@ -392,7 +445,7 @@ sub _parse_zone {
 		(.*) # rdata
 	$/ix;
 
-	while(<$zonefh>) {
+	for (split /\n/, $zonestr) {
 		chomp;
 		s/;.*$//;
 		next if /^\s*$/;
@@ -433,14 +486,16 @@ sub _parse_zone {
 
 			my $zfile = $1;
 			if($1 !~ m/^\//) {
-				$zfile = $zonepath.$zfile;
+				$zfile = File::Spec->catfile($zonepath, $zfile);
 			}
 
-			my
-				%subz=_parse_zone(
-					$zfile, $subo, $originappend,
-					$def_class, $def_ttl
-				);
+			my %subz = $self->_parse_zone(
+				zonefile => $zfile,
+				included => 1,
+				origin => $subo,
+				default_class => $def_class,
+				default_ttl => $def_ttl,
+			);
 
 			foreach my $k (keys %subz) {
 				$zone{$k}=$subz{$k};
@@ -483,7 +538,8 @@ sub _parse_zone {
 		$prev=$name;
 		$name = _fqdnize($name, $origin);
 
-		if($originappend and $type =~ /^(?:cname|afsdb|mx|ns)$/i and
+		if($self->{append_origin} and
+		   $type =~ /^(?:cname|afsdb|mx|ns)$/i and
 		   $rdata ne $origin and $rdata !~ /\.$/) {
 			$rdata.=".$origin";
 		}
@@ -493,7 +549,6 @@ sub _parse_zone {
 		push(@{$zone{lc $name}{lc $type}{class}}, $class);
 	}
 
-	close $zonefh;
 	return %zone;
 }
 
