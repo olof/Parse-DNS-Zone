@@ -1,6 +1,6 @@
 Parse::DNS::Zone parses a Zonefile, defining a zone in a
 domain name hierarchy. The module then offers an object
-oriented way of getting values out of the zone. 
+oriented way of getting values out of the zone.
 
 Validation of RRs or RR-names are out of the scope of this
 module.
@@ -14,9 +14,9 @@ INSTALLATION
 
 STATUS
 
-  This module is tested against trivial Bind9 and nsd3 zones, 
-  please report success or failures on other nameds, with 
-  similar RFC1034 format. 
+  This module is tested against trivial Bind9 and nsd3 zones,
+  please report success or failures on other nameds, with
+  similar RFC1034 format.
 
 AVAILABILITY
 

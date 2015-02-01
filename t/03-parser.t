@@ -1,4 +1,4 @@
-#!/usr/bin/perl 
+#!/usr/bin/perl
 use strict;
 use warnings;
 use Test::More tests => 42;
@@ -57,19 +57,19 @@ is(
 );
 
 is(
-	$zone->get_rdata(name=>'@', rr=>'NS'), 
-	'ns1.example.com.', 
+	$zone->get_rdata(name=>'@', rr=>'NS'),
+	'ns1.example.com.',
 	"get NS rdata, ns1"
 );
 
 is(
-	$zone->get_rdata(name=>'@', rr=>'NS', n=>1), 
-	'ns2.example.com.', 
+	$zone->get_rdata(name=>'@', rr=>'NS', n=>1),
+	'ns2.example.com.',
 	"get NS rdata, ns2"
 );
 
 is(
-	$zone->get_rdata(name=>'@', rr=>'NS', n=>0), 
+	$zone->get_rdata(name=>'@', rr=>'NS', n=>0),
 	scalar $zone->get_rdata(name=>'@', rr=>'NS'),
 	"get NS rr dupe, 0 and implicit is equal"
 );
@@ -81,14 +81,14 @@ is(
 );
 
 is(
-	$zone->get_rdata(name=>'@', rr=>'A'), 
-	'127.0.0.1', 
+	$zone->get_rdata(name=>'@', rr=>'A'),
+	'127.0.0.1',
 	'get A rr data'
 );
 
 is(
-	$zone->get_rdata(name=>'@', rr=>'MX'), 
-	'10 mail1.example.com.', 
+	$zone->get_rdata(name=>'@', rr=>'MX'),
+	'10 mail1.example.com.',
 	'get MX rdata with whitespace'
 );
 
@@ -111,12 +111,12 @@ ok($zone->exists('test.example.com.'), "test.example.com. should exist");
 ok(! $zone->exists('.'), "root (.) should not exist in zone");
 ok(! $zone->exists('fail'), "non existent domain should not exist");
 ok(
-	! $zone->exists('fail.example.com.'), 
+	! $zone->exists('fail.example.com.'),
 	"non existent domain should not exist (fqdn)"
 );
 
 ok(
-	! $zone->get_rdata(name=>'example.com.', rr=>'TXT'), 
+	! $zone->get_rdata(name=>'example.com.', rr=>'TXT'),
 	'commented out rr should not exist'
 );
 
@@ -127,26 +127,26 @@ is(
 );
 
 is(
-	$zone->get_rdata(name=>'test', rr=>'A'), 
-	'192.168.0.1', 
+	$zone->get_rdata(name=>'test', rr=>'A'),
+	'192.168.0.1',
 	'get A rr data'
 );
 
 is(
-	$zone->get_rdata(name=>'test', rr=>'AAAA'), 
-	'::1', 
+	$zone->get_rdata(name=>'test', rr=>'AAAA'),
+	'::1',
 	'get AAAA rr data for test'
 );
 
 is(
-	$zone->get_rdata(name=>'test-include', rr=>'A'), 
-	'192.168.128.1', 
+	$zone->get_rdata(name=>'test-include', rr=>'A'),
+	'192.168.128.1',
 	'get A rr data from included file'
 );
 
 is(
-	$zone->get_rdata(name=>'test-include', rr=>'AAAA'), 
-	'::1', 
+	$zone->get_rdata(name=>'test-include', rr=>'AAAA'),
+	'::1',
 	'get AAAA rr data from included file'
 );
 
@@ -156,8 +156,8 @@ is(
 	"expected number of dupes for test-dupes"
 );
 
-{ 
-	my @test = $zone->get_rdata(name=>'test-dupes', rr=>'A'); 
+{
+	my @test = $zone->get_rdata(name=>'test-dupes', rr=>'A');
 	is(
 		int @test,
 		3,
@@ -172,8 +172,8 @@ is($zone->get_rname, $zone_simple{rname}, "expected RNAME");
 	my($rname) = $zone_simple{rname};
 	$rname=~s/\./@/;
 	is(
-		$zone->get_rname(parse=>1), 
-		$rname, 
+		$zone->get_rname(parse=>1),
+		$rname,
 		"expected RNAME (with parsing)"
 	);
 }
@@ -185,32 +185,32 @@ is($zone->get_expire, $zone_simple{expire}, "SOA expire");
 is($zone->get_minimum, $zone_simple{minimum}, "SOA minimum");
 
 is(
-	$zone->get_rdata(name=>'test-class', rr=>'A', field=>'class'), 
+	$zone->get_rdata(name=>'test-class', rr=>'A', field=>'class'),
 	'IN', 'Extract class data from rr'
 );
 
 is(
-	$zone->get_rdata(name=>'test-ttl', rr=>'A', field=>'ttl'), 
+	$zone->get_rdata(name=>'test-ttl', rr=>'A', field=>'ttl'),
 	'400', 'Extract ttl data from rr'
 );
 
 is(
-	$zone->get_rdata(name=>'test-ttlclass', rr=>'A', field=>'class'), 
+	$zone->get_rdata(name=>'test-ttlclass', rr=>'A', field=>'class'),
 	'IN', 'Extract class data from rr with class and ttl'
 );
 
 is(
-	$zone->get_rdata(name=>'test-ttlclass', rr=>'A', field=>'ttl'), 
+	$zone->get_rdata(name=>'test-ttlclass', rr=>'A', field=>'ttl'),
 	'400', 'Extract ttl data from rr with class and ttl'
 );
 
 is(
-	$zone->get_rdata(name=>'test-ttlclassr', rr=>'A', field=>'class'), 
+	$zone->get_rdata(name=>'test-ttlclassr', rr=>'A', field=>'class'),
 	'IN', 'Extract class data from rr with class and ttl (reversed)'
 );
 
 is(
-	$zone->get_rdata(name=>'test-ttlclassr', rr=>'A', field=>'ttl'), 
+	$zone->get_rdata(name=>'test-ttlclassr', rr=>'A', field=>'ttl'),
 	'400', 'Extract ttl data from rr with class and ttl (reversed)'
 );
 
@@ -237,4 +237,3 @@ ok(
 	)},
 	'Should be possible to load zones without $TTL',
 );
-

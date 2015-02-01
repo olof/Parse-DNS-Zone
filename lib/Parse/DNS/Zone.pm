@@ -132,8 +132,8 @@ don't hesitate to report it!
 sub new {
 	my $class = shift;
 	my $self = {
-		require_soa=>1,
-		append_origin=>0,
+		require_soa => 1,
+		append_origin => 0,
 		@_
 	};
 
