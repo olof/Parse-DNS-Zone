@@ -57,7 +57,7 @@ Parse::DNS::Zone does not support $GENERATE in this version.
 =cut
 
 package Parse::DNS::Zone;
-our $VERSION = '0.42';
+our $VERSION = '0.5';
 use warnings;
 use strict;
 use File::Basename;

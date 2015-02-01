@@ -1,5 +1,29 @@
 Changes in Parse::DNS::Zone
 
+0.5 (2015-02-15)
+============
+* Add support for loading zones from strings. Read the POD and
+  use the new constructor parameter "zonestr" to pass in the
+  complete zone as a string. A new basepath parameter to the
+  constructor is added so that $INCLUDE statements may still
+  work.
+
+  Suggested by Daniel J. Wright. Solves rt.cpan.org #101719.
+
+* Tweak MANIFEST.SKIP and regenerate MANIFEST. This should solve
+  warnings like:
+
+   ==> MISMATCHED content between MANIFEST and distribution files! <==
+
+  Reported by Daniel J. Wright.
+
+* Skip Test::Distribution tests by default. Enable by running with
+  RELEASE_TESTING=y.
+
+  Reported by Daniel J. Wright. Solves rt.cpan.org #101794.
+
+* Fix double appended root dot issue when $ORIGIN is "."
+
 0.42 (2011-07-10)
 ============
 
