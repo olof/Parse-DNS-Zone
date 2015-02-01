@@ -356,8 +356,6 @@ sub get_minimum {
 	return $self->{soa}{minimum};
 }
 
-1;
-
 # Is used to populate the zone hash used internally.
 sub _parse {
 	my $self = shift;
@@ -526,6 +524,8 @@ sub _parse_soa {
 	$self->{soa}{expire}=$expire;
 	$self->{soa}{minimum}=$minimum;
 }
+
+1;
 
 =head1 SEE ALSO
 
