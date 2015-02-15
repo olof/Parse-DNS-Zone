@@ -3,6 +3,8 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
+my $github = 'https://github.com/olof/Parse-DNS-Zone';
+
 WriteMakefile (
 	NAME => 'Parse::DNS::Zone',
 	AUTHOR => 'Olof Johansson <olof@cpan.org>',
@@ -21,6 +23,13 @@ WriteMakefile (
 
 	PM => {
 		'lib/Parse/DNS/Zone.pm' => '$(INST_LIBDIR)/Zone.pm'
-	}
+	},
+
+	META_MERGE => {
+		resources => {
+			bugtracker => "$github/issues",
+			repository => $github,
+		},
+	},
 );
 

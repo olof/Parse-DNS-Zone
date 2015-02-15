@@ -589,7 +589,8 @@ RFC 1034, RFC 1035, Bind Administrator's Guide
 =head1 AVAILABILITY
 
 Latest stable version is available on CPAN. Current development
-version is available on https://github.com/olof/Parse-DNS-Zone.
+version is available on https://github.com/olof/Parse-DNS-Zone, and
+this is the I<preferred> place to report issues.
 
 =head1 COPYRIGHT
 
