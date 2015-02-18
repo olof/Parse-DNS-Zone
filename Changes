@@ -1,7 +1,15 @@
 Changes in Parse::DNS::Zone
 
+0.51 (2015-02-18)
+=================
+* Bump minimum Perl version to 5.10. The 0.5 release of
+  Parse::DNS::Zone included usage of features introduced in
+  Perl 5.10, so this is only documentating that fact.
+* Declare vcs repository (and preferred issue tracker):
+    https://github.com/olof/Parse-DNS-Zone
+
 0.5 (2015-02-15)
-============
+================
 * Add support for loading zones from strings. Read the POD and
   use the new constructor parameter "zonestr" to pass in the
   complete zone as a string. A new basepath parameter to the
