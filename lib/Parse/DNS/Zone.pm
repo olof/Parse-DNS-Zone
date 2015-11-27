@@ -58,7 +58,7 @@ Parse::DNS::Zone does not support $GENERATE in this version.
 
 use 5.010;
 package Parse::DNS::Zone;
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 use warnings;
 use strict;
 use File::Basename;
@@ -448,7 +448,7 @@ sub _parse_zone {
 
 	for (split /\n/, $zonestr) {
 		chomp;
-		s/;.*$//;
+		s/;[^"']*$//;
 		next if /^\s*$/;
 		s/\s+/ /g;
 

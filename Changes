@@ -1,4 +1,8 @@
 Changes in Parse::DNS::Zone
+0.52 (2015-11-27)
+=================
+* Fixed erroneous parsing of TXT records with semi-colon in
+  them.
 
 0.51 (2015-02-18)
 =================
