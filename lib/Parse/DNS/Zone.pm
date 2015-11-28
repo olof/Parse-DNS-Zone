@@ -448,7 +448,7 @@ sub _parse_zone {
 
 	for (split /\n/, $zonestr) {
 		chomp;
-		s/;.*$//;
+		s/(?<!\\);.*$//;
 		next if /^\s*$/;
 		s/\s+/ /g;
 
@@ -505,6 +505,8 @@ sub _parse_zone {
 		}
 
 		my($name,$ttlclass,$type,$rdata) = /$zentry/;
+
+        $rdata =~ s/\s+$//g;
 
 		my($ttl, $class);
 		if(defined $ttlclass) {
