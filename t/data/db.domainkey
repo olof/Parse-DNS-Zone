@@ -1,0 +1,19 @@
+$TTL	3600
+
+example.com.	IN		SOA	ns1.example.com. hostmaster.example.com. (
+						1234567890	; Serial
+						86400		; Refresh
+						3600		; Retry
+						3600000		; Expire
+						14400  )	; Negative Cache TTL
+
+@				TXT	"A plain text record"
+
+;comment		TXT	"commented out rr"
+
+dk-multiline	TXT	(	 	 	; Begin multi-line
+					v=DKIM1
+ 					descr=multiline
+					foo=bar )	; End multi-line
+
+dk-singleline	TXT "v=DKIM1\; descr=singleline\; fizz=buzz\;" ; Single line domain key
