@@ -53,12 +53,12 @@ ok(
 is(
 	$zone->get_rdata(name=>'dk-multiline.example.com.', rr=>'TXT'),
 	'v=DKIM1 descr=multiline foo=bar',
-    "Multiline TXT record is not complete"
+	"Multiline TXT record is not complete"
 );
 
 is(
 	$zone->get_rdata(name=>'dk-singleline.example.com.', rr=>'TXT'),
 	'"v=DKIM1\; descr=singleline\; fizz=buzz\;"',
-    "Singleline TXT record is not complete"
+	"Singleline TXT record is not complete"
 );
 

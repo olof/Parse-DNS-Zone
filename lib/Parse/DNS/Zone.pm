@@ -443,7 +443,10 @@ sub _parse_zone {
 			(?: \d+ \s+ ) |
 		)? # <ttl> <class> or <class> <ttl>
 		(\S+)\s+ # type
-		(.*) # rdata
+		(
+			(?: ".*?(?<!\\)" ) |	# quoted rdata
+			(?: .* )			# fall-back rdata
+		)
 	$/ix;
 
 	for (split /\n/, $zonestr) {
@@ -506,7 +509,7 @@ sub _parse_zone {
 
 		my($name,$ttlclass,$type,$rdata) = /$zentry/;
 
-        $rdata =~ s/\s+$//g;
+		$rdata =~ s/\s+$//g;
 
 		my($ttl, $class);
 		if(defined $ttlclass) {

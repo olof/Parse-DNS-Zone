@@ -11,9 +11,9 @@ example.com.	IN		SOA	ns1.example.com. hostmaster.example.com. (
 
 ;comment		TXT	"commented out rr"
 
-dk-multiline	TXT	(           ; Begin multi-line
+dk-multiline	TXT	(	 	 	; Begin multi-line
 					v=DKIM1
-                    descr=multiline
-					foo=bar ) ; End multi-line
+ 					descr=multiline
+					foo=bar )	; End multi-line
 
 dk-singleline	TXT "v=DKIM1\; descr=singleline\; fizz=buzz\;" ; Single line domain key
