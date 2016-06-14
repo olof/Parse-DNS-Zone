@@ -443,12 +443,14 @@ sub _parse_zone {
 			(?: \d+ \s+ ) |
 		)? # <ttl> <class> or <class> <ttl>
 		(\S+)\s+ # type
-		(.*) # rdata
+		(
+			(?: ".*?(?<!\\)" ) |	# quoted rdata
+			(?: .* )			# fall-back rdata
+		)
 	$/ix;
 
-	for (split /\n/, $zonestr) {
+	for (split /\n/, _strip_comments($zonestr)) {
 		chomp;
-		s/;.*$//;
 		next if /^\s*$/;
 		s/\s+/ /g;
 
@@ -505,6 +507,8 @@ sub _parse_zone {
 		}
 
 		my($name,$ttlclass,$type,$rdata) = /$zentry/;
+
+		$rdata =~ s/\s+$//g;
 
 		my($ttl, $class);
 		if(defined $ttlclass) {
@@ -579,6 +583,52 @@ sub _parse_soa {
 	$self->{soa}{retry}=$retry;
 	$self->{soa}{expire}=$expire;
 	$self->{soa}{minimum}=$minimum;
+}
+
+sub _strip_comments {
+    my $text = shift;
+    my $prefix = ';';
+    my $new_text;
+    foreach my $line ( split /\n/, $text ) {
+        $new_text .= "\n" if $new_text;
+        chomp $line;
+        my $idx = index $line, $prefix;
+        if( $idx < 0 ) { # -1 = No comment found, leave the line as is
+            $new_text .= $line;
+        }
+        else {
+            if( $idx == 0 ) { # 0 = The comment is at the start of the line
+                next;
+            }
+            else { # > 0 = A comment prefix was noted, but we need to check to see if it is quoted
+                while( _between_quotes($line, '"', $idx) or _between_quotes($line, "'", $idx) ) {
+                    # Move to the next comment in the line until we are not
+                    # within a quoted string
+                    $idx = index $line, $prefix, $idx + length $prefix;
+                }
+                # In case the index has moved to another value we want to check the return again
+                if( $idx > 0 ) {
+                    # Take all the text up to the first bare comment
+                    $new_text .= substr $line, 0, $idx;
+                }
+                else {
+                    # The comment prefix must have been fully quoted, so preserve it as is
+                    $new_text .= $line;
+                }
+            }
+        }
+    }
+    return $new_text;
+}
+
+sub _between_quotes {
+    my $string = shift;
+    my $quote = shift;
+    my $index = shift || 0;
+    my $start = index $string, $quote;
+    my $end   = index $string, $quote, $start + 1;
+    return 1 if $start < $index and $index < $end;
+    return 0;
 }
 
 1;
