@@ -17,3 +17,4 @@ dk-multiline	TXT	(	 	 	; Begin multi-line
 					foo=bar )	; End multi-line
 
 dk-singleline	TXT "v=DKIM1\; descr=singleline\; fizz=buzz\;" ; Single line domain key
+dk-semicolon	TXT "v=DKIM1; descr=semicolons; fizz=buzz;" ; Semi-colons within quotes

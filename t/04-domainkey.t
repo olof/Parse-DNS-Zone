@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 6;
+use Test::More tests => 7;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -19,6 +19,7 @@ my %zone_domainkey = (
 		'@' => [qw/SOA TXT/],
 		'dkim-multiline' => [qw/TXT/],
 		'dkim-singleline' => [qw/TXT/],
+		'dkim-semicolons' => [qw/TXT/],
 	},
 );
 
@@ -60,5 +61,11 @@ is(
 	$zone->get_rdata(name=>'dk-singleline.example.com.', rr=>'TXT'),
 	'"v=DKIM1\; descr=singleline\; fizz=buzz\;"',
 	"Singleline TXT record is not complete"
+);
+
+is(
+	$zone->get_rdata(name=>'dk-semicolon.example.com.', rr=>'TXT'),
+	'"v=DKIM1; descr=semicolons; fizz=buzz;"',
+	"Semicolon TXT record is not complete"
 );
 
