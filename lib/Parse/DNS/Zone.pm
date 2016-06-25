@@ -448,13 +448,26 @@ sub _parse_zone {
 
 	for (split /\n/, $zonestr) {
 		chomp;
-		s/;.*$//;
+
+		# Strip away any quoted strings; they should not be parsed in
+		# the same way as the rest of the zonefile. Replace the strings
+		# with placeholders. The real strings are kept in @strs, and
+		# we'll replace them with the real strings again soon.
+		($_, my @strs) = _strip_quotes($_);
+
+		# Strip comments.
+		s/(?<!\\);.*$//;
 		next if /^\s*$/;
+
+		# Normalize in-line whitespace
 		s/\s+/ /g;
 
 		s/^\@ /$origin /g;
 		s/ \@ / $origin /g;
 		s/ \@$/ $origin/g;
+
+		# Re-add the real strings again.
+		$_ = _unstrip_quotes($_, @strs);
 
 		# handles mutlirow entries, with ()
 		if($mrow) {
@@ -506,6 +519,8 @@ sub _parse_zone {
 
 		my($name,$ttlclass,$type,$rdata) = /$zentry/;
 
+		$rdata =~ s/\s+$//g;
+
 		my($ttl, $class);
 		if(defined $ttlclass) {
 			($ttl) = $ttlclass=~/(\d+)/o;
@@ -551,6 +566,22 @@ sub _parse_zone {
 	}
 
 	return %zone;
+}
+
+sub _strip_quotes {
+	local $_ = shift;
+	my $qstr = qr/(".*?(?<!\\)")/;
+	my @strs = /$qstr/g;
+
+	for my $str (keys @strs) {
+		s/\Q$strs[$str]\E/"\$str[$str]"/;
+	}
+
+	return $_, @strs;
+}
+
+sub _unstrip_quotes {
+	return shift =~ s/"\$str\[([0-9]+)\]"/$_[$1]/gr;
 }
 
 sub _fqdnize {
