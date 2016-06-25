@@ -506,6 +506,8 @@ sub _parse_zone {
 
 		my($name,$ttlclass,$type,$rdata) = /$zentry/;
 
+		$rdata =~ s/\s+$//g;
+
 		my($ttl, $class);
 		if(defined $ttlclass) {
 			($ttl) = $ttlclass=~/(\d+)/o;

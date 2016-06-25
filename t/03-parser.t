@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 42;
+use Test::More tests => 44;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -31,6 +31,8 @@ my %zone_simple = (
 		'test-ttlclassr' => [qw/A/],
 		'test-include' => [qw/A AAAA/],
 		'test-origapp' => [qw/CNAME/],
+		'test-trailing-whitespace' => [qw/TXT/],
+		'test-trailing-whitespace2' => [qw/TXT/],
 	},
 );
 
@@ -217,6 +219,16 @@ is(
 is(
 	$zone->get_rdata(name=>'test-origapp', rr=>'CNAME', field=>'rdata'),
 	'test', 'Do not append origin to RDATA if not told to do so'
+);
+
+is(
+	$zone->get_rdata(name=>'test-trailing-whitespace', rr=>'TXT'),
+	'foo', 'Trailing whitespace should be ignored'
+);
+
+is(
+	$zone->get_rdata(name=>'test-trailing-whitespace2', rr=>'TXT'),
+	'foo', 'Whitespace between rdata and comment should be ignored'
 );
 
 $zone = Parse::DNS::Zone->new(

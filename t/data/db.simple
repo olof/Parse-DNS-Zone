@@ -36,3 +36,6 @@ test-ttlclass	400 	IN	A 	127.0.0.1
 test-ttlclassr	IN	400	A 	127.0.0.1
 
 test-origapp			CNAME	test
+
+test-trailing-whitespace        TXT     foo 
+test-trailing-whitespace2       TXT     foo ; comment
