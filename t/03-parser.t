@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 44;
+use Test::More tests => 47;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -33,6 +33,9 @@ my %zone_simple = (
 		'test-origapp' => [qw/CNAME/],
 		'test-trailing-whitespace' => [qw/TXT/],
 		'test-trailing-whitespace2' => [qw/TXT/],
+		'dk-singleline' => [qw/TXT/],
+		'dk-singleline2' => [qw/TXT/],
+		'dk-multiline' => [qw/TXT/],
 	},
 );
 
@@ -229,6 +232,24 @@ is(
 is(
 	$zone->get_rdata(name=>'test-trailing-whitespace2', rr=>'TXT'),
 	'foo', 'Whitespace between rdata and comment should be ignored'
+);
+
+is(
+	$zone->get_rdata(name=>'dk-multiline.example.com.', rr=>'TXT'),
+	'v=DKIM1 descr=multiline foo=bar',
+	"Multiline TXT record is not complete"
+);
+
+is(
+	$zone->get_rdata(name=>'dk-singleline.example.com.', rr=>'TXT'),
+	'"v=DKIM1\; descr=singleline\; fizz=buzz\;"',
+	"Quoted rdata with escaped ;"
+);
+
+is(
+	$zone->get_rdata(name=>'dk-singleline2.example.com.', rr=>'TXT'),
+	'v=DKIM1\;descr=singleline\;fizz=buzz\;',
+	"Unquoted rdata with escaped ;"
 );
 
 $zone = Parse::DNS::Zone->new(

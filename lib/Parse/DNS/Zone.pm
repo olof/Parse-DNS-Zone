@@ -448,7 +448,7 @@ sub _parse_zone {
 
 	for (split /\n/, $zonestr) {
 		chomp;
-		s/;.*$//;
+		s/(?<!\\);.*$//;
 		next if /^\s*$/;
 		s/\s+/ /g;
 

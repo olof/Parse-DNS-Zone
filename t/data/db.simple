@@ -39,3 +39,11 @@ test-origapp			CNAME	test
 
 test-trailing-whitespace        TXT     foo 
 test-trailing-whitespace2       TXT     foo ; comment
+
+; DKIM test cases, to verify handling of quoting and escpaing
+dk-singleline	                TXT     "v=DKIM1\; descr=singleline\; fizz=buzz\;" ; Single line domain key
+dk-singleline2	                TXT     v=DKIM1\;descr=singleline\;fizz=buzz\; ; Single line domain key
+dk-multiline	                TXT	(             ; Begin multi-line
+					    v=DKIM1
+                                            descr=multiline
+					    foo=bar ) ; End multi-line
