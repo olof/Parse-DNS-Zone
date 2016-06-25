@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 47;
+use Test::More tests => 50;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -33,8 +33,11 @@ my %zone_simple = (
 		'test-origapp' => [qw/CNAME/],
 		'test-trailing-whitespace' => [qw/TXT/],
 		'test-trailing-whitespace2' => [qw/TXT/],
+		'test-txt-quoted' => [qw/TXT/],
+		'test-txt-quoted-escaped' => [qw/TXT/],
 		'dk-singleline' => [qw/TXT/],
 		'dk-singleline2' => [qw/TXT/],
+		'dk-singleline3' => [qw/TXT/],
 		'dk-multiline' => [qw/TXT/],
 	},
 );
@@ -235,6 +238,18 @@ is(
 );
 
 is(
+	$zone->get_rdata(name=>'test-txt-quoted', rr=>'TXT'),
+	'"foo bar ; baz"',
+	'get TXT quoted rdata'
+);
+
+is(
+	$zone->get_rdata(name=>'test-txt-quoted-escaped', rr=>'TXT'),
+	'"foo b\a\r\ \;\ \b\a\z"',
+	'get TXT quoted (and overly escaped) rdata'
+);
+
+is(
 	$zone->get_rdata(name=>'dk-multiline.example.com.', rr=>'TXT'),
 	'v=DKIM1 descr=multiline foo=bar',
 	"Multiline TXT record is not complete"
@@ -250,6 +265,12 @@ is(
 	$zone->get_rdata(name=>'dk-singleline2.example.com.', rr=>'TXT'),
 	'v=DKIM1\;descr=singleline\;fizz=buzz\;',
 	"Unquoted rdata with escaped ;"
+);
+
+is(
+	$zone->get_rdata(name=>'dk-singleline3.example.com.', rr=>'TXT'),
+	'"v=DKIM1; descr=singleline; fizz=buzz;"',
+	"Quoted rdata with unescaped ;"
 );
 
 $zone = Parse::DNS::Zone->new(
