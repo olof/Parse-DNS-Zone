@@ -1,5 +1,10 @@
 Changes in Parse::DNS::Zone
 
+0.60 2016-11-11
+- Handle backslash escaped comment characters. Patch by Daniel
+  Donckers
+- Adhere to CPAN::Changes::Spec for the changelog
+
 0.51 2015-02-18
 - Bump minimum Perl version to 5.10. The 0.5 release of
   Parse::DNS::Zone included usage of features introduced in
