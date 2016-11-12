@@ -10,6 +10,7 @@ META.yml
 README
 t/01-changes.t
 t/01-dist.t
+t/01-manifest.t
 t/03-filehandling.t
 t/03-fqdnize.t
 t/03-parser.t
