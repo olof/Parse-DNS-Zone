@@ -8,6 +8,7 @@ MANIFEST			This list of files
 MANIFEST.SKIP
 META.yml
 README
+t/01-changes.t
 t/01-dist.t
 t/03-filehandling.t
 t/03-fqdnize.t
