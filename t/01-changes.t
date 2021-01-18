@@ -9,14 +9,18 @@ BEGIN {
 		plan skip_all => "$@" if $@;
 		Test::CPAN::Changes::changes_ok();
 	} and subtest correctness => sub {
-		use CPAN::Changes;
-		use Parse::DNS::Zone;
-		my $ch = CPAN::Changes->load('Changes');
-		my $latest = (reverse $ch->releases())[0];
+		eval { require CPAN::Changes };
+		if ($@) {
+			plan skip_all => "$@" if $@;
+		} else {
+			use Parse::DNS::Zone;
+			my $ch = CPAN::Changes->load('Changes');
+			my $latest = (reverse $ch->releases())[0];
 
-		my $version = $Parse::DNS::Zone::VERSION;
-		is $latest->version, $version,
-		   "Module version is $version, changelog is in sync?";
+			my $version = $Parse::DNS::Zone::VERSION;
+			is $latest->version, $version,
+			   "Module version is $version, changelog is in sync?";
+		}
 		done_testing();
 	};
 }
