@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 50;
+use Test::More tests => 51;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -21,6 +21,7 @@ my %zone_simple = (
 		ns2 => [qw/A/],
 		mail1 => [qw/A/],
 		mail2 => [qw/A/],
+		nsapptr => [qw/NSAP-PTR/],
 		'test' => [qw/A AAAA/],
 		'test-cname' => [qw/CNAME/],
 		'test-reccname' => [qw/CNAME/],
@@ -271,6 +272,12 @@ is(
 	$zone->get_rdata(name=>'dk-singleline3.example.com.', rr=>'TXT'),
 	'"v=DKIM1; descr=singleline; fizz=buzz;"',
 	"Quoted rdata with unescaped ;"
+);
+
+is(
+	$zone->get_rdata(name=>'nsapptr', rr=>'NSAP-PTR'),
+	'foo.',
+	"RTYPE with hyphen"
 );
 
 $zone = Parse::DNS::Zone->new(

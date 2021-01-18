@@ -37,6 +37,8 @@ test-ttlclassr	IN	400	A 	127.0.0.1
 
 test-origapp			CNAME	test
 
+nsapptr                         NSAP-PTR foo.
+
 test-trailing-whitespace        TXT     foo 
 test-trailing-whitespace2       TXT     foo ; comment
 
