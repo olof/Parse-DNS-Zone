@@ -204,7 +204,7 @@ sub get_rdata {
 	                               (!($name=~/\.$/)));
 
 	return $self->{zone}{lc $name}{lc $rr}{lc $field}[$n] if defined $n;
-	return @{$self->{zone}{lc $name}{lc $rr}{lc $field}} if wantarray;
+	return @{$self->{zone}{lc $name}{lc $rr}{lc $field} // []} if wantarray;
 	return $self->{zone}{lc $name}{lc $rr}{lc $field}[0];
 }
 

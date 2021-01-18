@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 51;
+use Test::More tests => 55;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -278,6 +278,30 @@ is(
 	$zone->get_rdata(name=>'nsapptr', rr=>'NSAP-PTR'),
 	'foo.',
 	"RTYPE with hyphen"
+);
+
+is_deeply(
+	[$zone->get_rdata(name=>'noexists', rr=>'A')],
+	[],
+	'looking up rdata for non-existing name (wantarray)',
+);
+
+is(
+	$zone->get_rdata(name=>'noexists', rr=>'A'),
+	undef,
+	'looking up rdata for non-existing name',
+);
+
+is_deeply(
+	[$zone->get_rdata(name=>'ns1', rr=>'SOA')],
+	[],
+	'looking up rdata for non-existing rtype (wantarray)',
+);
+
+is(
+	$zone->get_rdata(name=>'ns1', rr=>'SOA'),
+	undef,
+	'looking up rdata for non-existing rtype',
 );
 
 $zone = Parse::DNS::Zone->new(

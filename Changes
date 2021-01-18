@@ -1,6 +1,8 @@
 Changes in Parse::DNS::Zone
 
 0.61 (unreleased)
+- Fix crash bug for get_rdata, when asking about non existing
+  names/rdata in list context
 - Improvements to test suite
 
 0.60 2016-11-11
