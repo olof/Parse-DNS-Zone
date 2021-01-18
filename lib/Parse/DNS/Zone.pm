@@ -182,7 +182,7 @@ you're in list context, or the first RR if you're in scalar
 context.
 
 The $field is the particular component of the resource record to
-return.  It defaults to 'val', which is the actual value of the
+return.  It defaults to 'rdata', which is the actual value of the
 record. Other possibilities are 'class' (e.g. "IN") and 'ttl'.
 
 =cut
