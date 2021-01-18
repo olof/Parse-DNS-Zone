@@ -1,5 +1,8 @@
 Changes in Parse::DNS::Zone
 
+0.7 (unreleased)
+- Improvements to test suite
+
 0.60 2016-11-11
 - Handle backslash escaped comment characters. Patch by Daniel
   Donckers
