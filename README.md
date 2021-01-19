@@ -91,14 +91,11 @@ version is available on https://github.com/olof/Parse-DNS-Zone.
 
 ## Version numbering
 
-Up until version `0.60`, the version numbers should be intepreted
-as floating point numbers, and 0.5 is higher than 0.42. This is
-true for later versions as well, but I will make sure the
+Up until version `0.51`, the version numbers should be intepreted
+as floating point numbers, and 0.5 is thus higher than 0.42. This
+is true for later versions as well, but I will make sure the
 ordering is correct also for lexical sorting (by appending
-zeroes). I.e. a future version, 0.99 will not be followed by 1,
-but 1.00). Doing otherwise would just make it harder to
-distribute this software in systems that rely on lexical sorting
-of versions.
+zeroes). For instance, 0.51 was followed by 0.60, not 0.6.
 
 # Closing remakrs
 
