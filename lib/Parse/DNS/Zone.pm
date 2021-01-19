@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 # Parse::DNS::Zone - DNS Zone File Parser
 #
-# Copyright (c) 2009-2011, 2013, 2015 - Olof Johansson <olof@cpan.org>
-# All rights reserved.
+# Copyright (c) 2009-2021 - Olof Johansson <olof@cpan.org>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl itself.
@@ -626,9 +625,7 @@ this is the I<preferred> place to report issues.
 
 =head1 COPYRIGHT
 
- Copyright (c) 2009-2011, 2013, 2015 - Olof Johansson <olof@cpan.org>
-
-All rights reserved.
+ Copyright (c) 2009-2021 - Olof Johansson <olof@cpan.org>
 
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
