@@ -5,19 +5,6 @@ getting values out of the zone.
 Validation of RRs or RR-names are out of the scope of this
 module.
 
-# Installation
-
-    perl Makefile.PL
-    make
-    make test
-    make install
-
-(Note that the last step, `make install`, may require you to have
-root permissions. But avoid running it as root unless you trust
-me for some weird reason. There are various solutions, but one of
-the simpler is `local::lib`, this sets up a user local perl
-module install path in your home directory.)
-
 # Synopsis
 
 Consider the following zonefile, let's call it `db.example.org`:
@@ -66,6 +53,19 @@ say "mname=", $pdz->get_mname();
 say "rname=", $pdz->get_rname();
 say "serial=", $pdz->get_serial();
 ```
+
+# Installation
+
+    perl Makefile.PL
+    make
+    make test
+    make install
+
+(Note that the last step, `make install`, may require you to have
+root permissions. But avoid running it as root unless you trust
+me for some weird reason. There are various solutions, but one of
+the simpler is `local::lib`, this sets up a user local perl
+module install path in your home directory.)
 
 # Status and limitations
 
