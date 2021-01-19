@@ -26,6 +26,9 @@ Consider the following zonefile, let's call it `db.example.org`:
 www           86400 IN  A    192.0.2.34
 ```
 
+And imagine we would want to programatically extract information
+from that. Maybe this module can help?
+
 ```perl
 use 5.020;
 use Parse::DNS::Zone;
