@@ -10,13 +10,13 @@ module.
 Consider the following zonefile, let's call it `db.example.org`:
 
 ```zone
-@  3600  IN  SOA  ns1.example.net. hostmaster.example.net. (
-    2020121120
-    7200
-    3600
-    1209600
-    3600
-)
+@             3600  IN  SOA  ns1.example.net. hostmaster.example.net. (
+                                 2020121120
+                                 7200
+                                 3600
+                                 1209600
+                                 3600
+                             )
 
               86400 IN  NS   ns1.example.net.
               86400 IN  NS   ns2.example.net.
