@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use Test::More tests => 55;
+use Test::More;
 
 BEGIN { use_ok('Parse::DNS::Zone') }
 
@@ -322,3 +322,21 @@ ok(
 	)},
 	'Should be possible to load zones without $TTL',
 );
+
+$zone = Parse::DNS::Zone->new(
+	zonefile 	=> 't/data/db.units',
+	origin 		=> 'example.com.',
+);
+
+is($zone->get_serial, 1234567890, "SOA serial");
+is($zone->get_refresh, 131400, "SOA refresh");
+is($zone->get_retry, 3600, "SOA retry");
+is($zone->get_expire, 1209600, "SOA expire");
+is($zone->get_minimum, 3600, "SOA minimum");
+
+is(
+	$zone->get_rdata(name=>'test-ttlunit', rr=>'A', field=>'ttl'),
+	'3600', 'Extract ttl data from rr'
+);
+
+done_testing;
