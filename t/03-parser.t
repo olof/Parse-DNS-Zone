@@ -339,4 +339,21 @@ is(
 	'3600', 'Extract ttl data from rr'
 );
 
+$zone = Parse::DNS::Zone->new(
+	zonefile 	=> 't/data/db.units.invalid',
+	origin 		=> 'example.com.',
+);
+
+is(
+	$zone->get_rdata(name=>'@', rr=>'NS'), 'ns.example.com.',
+	"extract valid RR from zone with invalid records"
+);
+
+is($zone->get_rdata(name=>'ns', rr=>'A'), undef,
+   'invalid record (mixes units with unit less)');
+is($zone->get_rdata(name=>'www', rr=>'A'), undef,
+   'invalid record (uses invalid unit)');
+is($zone->get_rdata(name=>'ldap', rr=>'A'), '127.0.0.1',
+   'valid record after invalid records');
+
 done_testing;
