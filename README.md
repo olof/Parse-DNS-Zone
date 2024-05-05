@@ -26,7 +26,7 @@ Consider the following zonefile, let's call it `db.example.org`:
 www           86400 IN  A    192.0.2.34
 ```
 
-And imagine we would want to programatically extract information
+And imagine we would want to programmatically extract information
 from that. Maybe this module can help?
 
 ```perl
@@ -91,12 +91,12 @@ version is available on https://github.com/olof/Parse-DNS-Zone.
 
 ## Version numbering
 
-Up until version `0.51`, the version numbers should be intepreted
+Up until version `0.51`, the version numbers should be interpreted
 as floating point numbers, and 0.5 is thus higher than 0.42. This
 is true for later versions as well, but I will make sure the
 ordering is correct also for lexical sorting (by appending
 zeroes). For instance, 0.51 was followed by 0.60, not 0.6.
 
-# Closing remakrs
+# Closing remarks
 
 Have fun with DNS.
