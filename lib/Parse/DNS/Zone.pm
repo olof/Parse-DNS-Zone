@@ -62,7 +62,7 @@ of version 0.70).
 
 use 5.010;
 package Parse::DNS::Zone;
-our $VERSION = '0.60';
+our $VERSION = '0.70';
 use warnings;
 use strict;
 use File::Basename;
