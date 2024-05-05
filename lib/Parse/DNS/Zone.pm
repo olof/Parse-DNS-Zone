@@ -186,7 +186,7 @@ you're in list context, or the first RR if you're in scalar
 context.
 
 The $field is the particular component of the resource record to
-return.  It defaults to 'rdata', which is the actual value of the
+return. It defaults to 'rdata', which is the actual value of the
 record. Other possibilities are 'class' (e.g. "IN") and 'ttl'.
 
 =cut
@@ -437,8 +437,8 @@ sub _parse_time_unit {
 		my ($value, $unit) = $part =~ /^(\d+)(\D+)?$/;
 		$unit = 's' unless $unit;
 		$unit = lc($unit);
-		# this should never happen as the %multi_for_unit hash includes all
-		# units the regex parses, just extra safety
+		# this should never happen as the %multi_for_unit hash
+		# includes all units the regex parses, just extra safety.
 		die "BUG: known unit '$unit' is unhandled"
 			unless exists $multi_for_unit{$unit};
 		$seconds += $value * $multi_for_unit{$unit};
@@ -463,7 +463,8 @@ sub _parse_zone {
 
 	my ($def_class, $def_ttl);
 	if ($opts{included}) {
-		($def_class, $def_ttl) = @{\%opts}{qw(default_class default_ttl)};
+		($def_class, $def_ttl) = @{\%opts}{qw(default_class
+		                                      default_ttl)};
 
 	}
 	my $zonepath = $self->{basepath};
@@ -586,7 +587,7 @@ sub _parse_zone {
 			}
 		}
 
-		$ttl = defined $ttl ?  _parse_time_unit($ttl) : $def_ttl;
+		$ttl = defined $ttl ? _parse_time_unit($ttl) : $def_ttl;
 		$class = defined $class ? $class : $def_class;
 		$def_class = $class;
 
